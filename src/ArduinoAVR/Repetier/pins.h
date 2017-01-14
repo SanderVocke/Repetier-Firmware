@@ -924,6 +924,100 @@ STEPPER_CURRENT_CONTROL
 
 #endif
 
+/**********************************************************************
+ * Anet A8 with LED pin used for auto-level
+ * ********************************************************************/
+#if MOTHERBOARD == 135
+/*START STOCK A8 SETTINGS*/
+// Listed here all settings we haven't quite figured out
+
+//      #ifdef REPRAPPRO_HUXLEY
+//      #define HEATER_1_PIN     10 // bed (change to 10 for gate pin of MOSFET on heated bed)
+//      #else
+//      #define HEATER_1_PIN     12
+//      #endif
+
+
+//      #if 1//def HAVE_LCD
+//      //Zonestar UI
+//      #define LCD_PINS_RS 		28//A3
+//      #define LCD_PINS_ENABLE 	29//A2
+//      #define LCD_PINS_D4 		10
+//      #define LCD_PINS_D5 		11
+//      #define LCD_PINS_D6 		16
+//      #define LCD_PINS_D7 		17
+//      #define	ADC_KEYPAD_PIN		 1//D30 Analog numbering
+//      #endif
+
+
+//      #endif
+/* END STOCK A8 SETTINGS */
+
+
+#define KNOWN_BOARD 1
+#ifndef __AVR_ATmega644P__
+#ifndef __AVR_ATmega1284P__
+//#error Oops!  Make sure you have 'Sanguino' selected from the 'Tools -> Boards' menu.
+#endif
+#endif
+
+#define ORIG_X_STEP_PIN         15
+#define ORIG_X_DIR_PIN          21
+#define ORIG_X_MIN_PIN          18
+#define ORIG_X_MAX_PIN           -2
+
+#define ORIG_Y_STEP_PIN         22
+#define ORIG_Y_DIR_PIN          23
+#define ORIG_Y_MIN_PIN          19
+#define ORIG_Y_MAX_PIN          -1
+
+#define ORIG_Z_STEP_PIN         3
+#define ORIG_Z_DIR_PIN          2
+#define ORIG_Z_MIN_PIN          20
+#define ORIG_Z_MAX_PIN          -1
+
+#define ORIG_E0_STEP_PIN         1
+#define ORIG_E0_DIR_PIN          0
+#define ORIG_E0_ENABLE_PIN      14
+
+//29 on Melzi1284p A2
+//#define PROBE_PIN          -1 //This is the stock setting, we have put probe on pin 27
+//#define LED_PIN            27 //This is the stock setting, we have put the probe pin here
+#define PROBE_PIN 27
+#define LED_PIN -1
+
+#define ORIG_FAN_PIN            4
+
+#define ORIG_PS_ON_PIN          -1
+
+// (extruder)
+#define HEATER_0_PIN       13
+#define HEATER_2_PIN       -1
+// bed (change to 12 for breakout pin on header)
+#define HEATER_1_PIN     10
+
+#define ORIG_X_ENABLE_PIN       14
+#define ORIG_Y_ENABLE_PIN       14
+#define ORIG_Z_ENABLE_PIN       26
+
+// MUST USE ANALOG INPUT NUMBERING NOT DIGITAL OUTPUT NUMBERING!!!!!!!!! (pin 33 extruder)
+#define TEMP_0_PIN          7
+// MUST USE ANALOG INPUT NUMBERING NOT DIGITAL OUTPUT NUMBERING!!!!!!!!! (pin 34 bed)
+#define TEMP_1_PIN          6
+#define TEMP_2_PIN         -1
+#define SDPOWER            -1
+// 31 http://reprap.org/wiki/Melzi#Melzi_Arduino_Pin_Numbers says 31, schamtic show pin 37 = PA0 which is arduino pin 31!
+#define SDSS               31
+#define SCK_PIN          7
+#define MISO_PIN         6
+#define MOSI_PIN         5
+#define SDSUPPORT 1  // sd card reader on board
+#define ORIG_SDCARDDETECT -1
+
+#define E0_PINS ORIG_E0_STEP_PIN,ORIG_E0_DIR_PIN,ORIG_E0_ENABLE_PIN,
+#define E1_PINS
+#endif
+
 /****************************************************************************************
 * Melzi pin assignment
 *

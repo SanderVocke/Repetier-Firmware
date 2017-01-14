@@ -419,9 +419,28 @@ void Printer::startProbing(bool runScript) {
     Printer::offsetX = -EEPROM::zProbeXOffset();
     Printer::offsetY = -EEPROM::zProbeYOffset();
     Printer::offsetZ = 0; // we correct this with probe height
-    PrintLine::moveRelativeDistanceInSteps((Printer::offsetX - oldOffX) * Printer::axisStepsPerMM[X_AXIS],
-                                           (Printer::offsetY - oldOffY) * Printer::axisStepsPerMM[Y_AXIS],
-                                           0, 0, EEPROM::zProbeXYSpeed(), true, ALWAYS_CHECK_ENDSTOPS);
+
+    //We will apply the probe offset by moving the head.
+    //However, we may end up at a negative position if the current position is near the edge.
+    //Here, check for that and if it is the case, do a pre-move to a safe position.
+    float toMoveX = Printer::offsetX - oldOffX;
+    float toMoveY = Printer::offsetY - oldOffY;
+
+    if((currentPosition[X_AXIS] + toMoveX) < 0.0f){
+        float preMovePos =  1.0f - Printer::offsetX - toMoveX;
+        moveTo(preMovePos, IGNORE_COORDINATE, IGNORE_COORDINATE, IGNORE_COORDINATE, EEPROM::zProbeXYSpeed());
+        Commands::waitUntilEndOfAllMoves();
+    }
+
+    if((currentPosition[Y_AXIS] + toMoveY) < 0.0f){
+        float preMovePos =  1.0f - Printer::offsetY - toMoveY;
+        moveTo(IGNORE_COORDINATE, preMovePos, IGNORE_COORDINATE, IGNORE_COORDINATE, EEPROM::zProbeXYSpeed());
+        Commands::waitUntilEndOfAllMoves();
+    }
+
+    PrintLine::moveRelativeDistanceInSteps(toMoveX * Printer::axisStepsPerMM[X_AXIS],
+                                           toMoveY * Printer::axisStepsPerMM[Y_AXIS],
+                                          0, 0, EEPROM::zProbeXYSpeed(), true, ALWAYS_CHECK_ENDSTOPS);
 }
 
 void Printer::finishProbing() {
@@ -434,9 +453,29 @@ void Printer::finishProbing() {
         Printer::offsetY = -Extruder::current->yOffset * Printer::invAxisStepsPerMM[Y_AXIS];
         Printer::offsetZ = -Extruder::current->zOffset * Printer::invAxisStepsPerMM[Z_AXIS];
     }
-    PrintLine::moveRelativeDistanceInSteps((Printer::offsetX - oldOffX) * Printer::axisStepsPerMM[X_AXIS],
-                                           (Printer::offsetY - oldOffY) * Printer::axisStepsPerMM[Y_AXIS],
-                                           (Printer::offsetZ - oldOffZ) * Printer::axisStepsPerMM[Z_AXIS], 0, EEPROM::zProbeXYSpeed(), true, ALWAYS_CHECK_ENDSTOPS);
+
+    //We will un-apply the probe offset by moving the head.
+    //However, we may end up at a negative position if the current position is near the edge.
+    //Here, check for that and if it is the case, do a pre-move to a safe position
+    float toMoveX = Printer::offsetX - oldOffX;
+    float toMoveY = Printer::offsetY - oldOffY;
+    float toMoveZ = Printer::offsetZ - oldOffZ;
+    if((currentPosition[X_AXIS] + toMoveX) < 0.0f){
+        float preMovePos = 1.0 - Printer::offsetX - toMoveX;
+        moveTo(preMovePos, IGNORE_COORDINATE, IGNORE_COORDINATE, IGNORE_COORDINATE, EEPROM::zProbeXYSpeed());
+        Commands::waitUntilEndOfAllMoves();
+    }
+    if((currentPosition[Y_AXIS] + toMoveY) < 0.0f){
+        float preMovePos = 1.0 - Printer::offsetY - toMoveY;
+        moveTo(IGNORE_COORDINATE, preMovePos, IGNORE_COORDINATE, IGNORE_COORDINATE, EEPROM::zProbeXYSpeed());
+        Commands::waitUntilEndOfAllMoves();
+    }
+
+    PrintLine::moveRelativeDistanceInSteps(toMoveX * Printer::axisStepsPerMM[X_AXIS],
+                                           toMoveY * Printer::axisStepsPerMM[Y_AXIS],
+                                           toMoveZ * Printer::axisStepsPerMM[Z_AXIS], 0, EEPROM::zProbeXYSpeed(), true, ALWAYS_CHECK_ENDSTOPS);
+
+
 }
 
 /*

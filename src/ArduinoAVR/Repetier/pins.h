@@ -981,10 +981,12 @@ STEPPER_CURRENT_CONTROL
 #define ORIG_E0_ENABLE_PIN      14
 
 //29 on Melzi1284p A2
-//#define PROBE_PIN          -1 //This is the stock setting, we have put probe on pin 27
 //#define LED_PIN            27 //This is the stock setting, we have put the probe pin here
+//#define PROBE_PIN -1 //was old setting
 #define PROBE_PIN 27
 #define LED_PIN -1
+
+#define PROBE_PIN -1
 
 #define ORIG_FAN_PIN            4
 

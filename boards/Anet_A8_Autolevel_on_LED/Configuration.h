@@ -9,7 +9,7 @@
     Repetier-Firmware is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    GNU General Public License for more details.l
 
     You should have received a copy of the GNU General Public License
     along with Repetier-Firmware.  If not, see <http://www.gnu.org/licenses/>.
@@ -37,7 +37,7 @@
 */
 
 #define NUM_EXTRUDER 1
-#define MOTHERBOARD 63
+#define MOTHERBOARD 135
 #include "pins.h"
 
 // ################## EDIT THESE SETTINGS MANUALLY ################
@@ -65,7 +65,7 @@
 #define DRIVE_SYSTEM 0
 #define XAXIS_STEPS_PER_MM 100
 #define YAXIS_STEPS_PER_MM 100
-#define ZAXIS_STEPS_PER_MM 400
+#define ZAXIS_STEPS_PER_MM 400 //STOCK: 1600
 #define EXTRUDER_FAN_COOL_TEMP 50
 #define PDM_FOR_EXTRUDER 0
 #define PDM_FOR_COOLER 0
@@ -79,7 +79,7 @@
 #define EXT0_X_OFFSET 0
 #define EXT0_Y_OFFSET 0
 #define EXT0_Z_OFFSET 0
-#define EXT0_STEPS_PER_MM 95
+#define EXT0_STEPS_PER_MM 110
 #define EXT0_TEMPSENSOR_TYPE 1
 #define EXT0_TEMPSENSOR_PIN TEMP_0_PIN
 #define EXT0_HEATER_PIN HEATER_0_PIN
@@ -236,7 +236,7 @@ It also can add a delay to wait for spindle to run on full speed.
 #define MIN_HARDWARE_ENDSTOP_Y true
 #define ENDSTOP_PULLUP_Z_MIN true
 #define ENDSTOP_Z_MIN_INVERTING true
-#define MIN_HARDWARE_ENDSTOP_Z true
+#define MIN_HARDWARE_ENDSTOP_Z false
 #define ENDSTOP_PULLUP_X_MAX true
 #define ENDSTOP_X_MAX_INVERTING false
 #define MAX_HARDWARE_ENDSTOP_X false
@@ -253,7 +253,7 @@ It also can add a delay to wait for spindle to run on full speed.
 #define min_software_endstop_z false
 #define max_software_endstop_x true
 #define max_software_endstop_y true
-#define max_software_endstop_z true
+#define max_software_endstop_z false
 #define ENDSTOP_X_BACK_MOVE 5
 #define ENDSTOP_Y_BACK_MOVE 5
 #define ENDSTOP_Z_BACK_MOVE 2
@@ -280,24 +280,24 @@ It also can add a delay to wait for spindle to run on full speed.
 #define X_HOME_DIR -1
 #define Y_HOME_DIR -1
 #define Z_HOME_DIR -1
-#define X_MAX_LENGTH 230
-#define Y_MAX_LENGTH 210
-#define Z_MAX_LENGTH 180
-#define X_MIN_POS -40
-#define Y_MIN_POS -20
-#define Z_MIN_POS 0
-#define DISTORTION_CORRECTION 0
+#define X_MAX_LENGTH 200 //not sure why, but movement still limited to 200 if set higher
+#define Y_MAX_LENGTH 200 //not sure why, but movement still limited to 200 if set higher
+#define Z_MAX_LENGTH 230
+#define X_MIN_POS 0
+#define Y_MIN_POS 0
+#define Z_MIN_POS -50
+#define DISTORTION_CORRECTION 1
 #define DISTORTION_CORRECTION_POINTS 5
 #define DISTORTION_CORRECTION_R 100
 #define DISTORTION_PERMANENT 1
 #define DISTORTION_UPDATE_FREQUENCY 15
 #define DISTORTION_START_DEGRADE 0.5
 #define DISTORTION_END_HEIGHT 1
-#define DISTORTION_EXTRAPOLATE_CORNERS 0
-#define DISTORTION_XMIN 10
-#define DISTORTION_YMIN 10
-#define DISTORTION_XMAX 190
-#define DISTORTION_YMAX 190
+#define DISTORTION_EXTRAPOLATE_CORNERS 1
+#define DISTORTION_XMIN 65
+#define DISTORTION_YMIN 30
+#define DISTORTION_XMAX 199
+#define DISTORTION_YMAX 199
 
 // ##########################################################################################
 // ##                           Movement settings                                          ##
@@ -413,30 +413,30 @@ WARNING: Servos can draw a considerable amount of current. Make sure your system
 #define Z_PROBE_Z_OFFSET 0
 #define Z_PROBE_Z_OFFSET_MODE 0
 #define UI_BED_COATING 1
-#define FEATURE_Z_PROBE 0
-#define Z_PROBE_BED_DISTANCE 6
-#define Z_PROBE_PIN -1
+#define FEATURE_Z_PROBE 1
+#define Z_PROBE_BED_DISTANCE 3
+#define Z_PROBE_PIN 27
 #define Z_PROBE_PULLUP 0
-#define Z_PROBE_ON_HIGH 0
-#define Z_PROBE_X_OFFSET 63
+#define Z_PROBE_ON_HIGH 1
+#define Z_PROBE_X_OFFSET 61.5
 #define Z_PROBE_Y_OFFSET -11
 #define Z_PROBE_WAIT_BEFORE_TEST 0
-#define Z_PROBE_SPEED 2
+#define Z_PROBE_SPEED 4
 #define Z_PROBE_XY_SPEED 150
 #define Z_PROBE_SWITCHING_DISTANCE 1
-#define Z_PROBE_REPETITIONS 1
-#define Z_PROBE_HEIGHT 1.650
+#define Z_PROBE_REPETITIONS 3
+#define Z_PROBE_HEIGHT 3.5
 #define Z_PROBE_START_SCRIPT ""
 #define Z_PROBE_FINISHED_SCRIPT ""
 #define Z_PROBE_REQUIRES_HEATING 0
 #define Z_PROBE_MIN_TEMPERATURE 150
 #define FEATURE_AUTOLEVEL 1
-#define Z_PROBE_X1 30
-#define Z_PROBE_Y1 0
-#define Z_PROBE_X2 160
-#define Z_PROBE_Y2 0
-#define Z_PROBE_X3 95
-#define Z_PROBE_Y3 120
+#define Z_PROBE_X1 65
+#define Z_PROBE_Y1 30
+#define Z_PROBE_X2 199
+#define Z_PROBE_Y2 30
+#define Z_PROBE_X3 140
+#define Z_PROBE_Y3 185
 #define BED_LEVELING_METHOD 0
 #define BED_CORRECTION_METHOD 0
 #define BED_LEVELING_GRID_SIZE 5
@@ -523,3 +523,5 @@ Values must be in range 1..255
 
 
 #define NUM_MOTOR_DRIVERS 0
+
+#endif
